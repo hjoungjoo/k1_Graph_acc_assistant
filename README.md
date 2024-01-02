@@ -1,5 +1,5 @@
 # k1_Graph_acc_assistant
-이 프로젝트는 파이썬 없이 쉽게 상용자들이 밸트 탠셔닝절차를 실행하고 그 결과를 쉽게 볼수 있도록 만들었습니다.
+이 프로젝트는 파이썬 없이 쉽게 사용자들이 밸트 탠셔닝절차를 실행하고 그 결과를 쉽게 볼수 있도록 만들었습니다.
 
 This project aims to make it easy for users who have little knowledge of Python to run Belt tensioning procedure( Klipper's Graph_accelerometer ) on Windows and view the resulting recommendations.
 
