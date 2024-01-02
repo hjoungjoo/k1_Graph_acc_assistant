@@ -28,5 +28,5 @@ gcode:<br/>
 # 📦Download
 [Releases](https://github.com/theycallmek/Klipper-Input-Shaping-Assistant/releases)
 
-EXE packaged by pyinstaller. Build cmd:
+EXE packaged by pyinstaller. Build cmd:<br/>
 pyinstaller -w main.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant
