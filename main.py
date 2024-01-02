@@ -1,24 +1,42 @@
-# Simple GUI for Klipper graph_accelometer.
-# Made by MagicFly
-import os.path
+# Simple GUI for Klipper Input Shaper Calibration.
+# Made by RoyalT
+
 from tkinter import *
 from tkinter import filedialog
-import graph_accelerometer
+import calibrate_shaper
 import matplotlib
-import matplotlib.ticker
-import matplotlib.pyplot, matplotlib.dates, matplotlib.font_manager
 
 # Use TkAgg backend
-matplotlib.rcParams.update({'figure.autolayout': True})
 matplotlib.use('TkAgg')
 
-def run_graph(filename):
+
+def browse_files():
+    filename = filedialog.askopenfilename(
+        initialdir="/",
+        title="Select a File",
+        filetypes=(
+            ("CSV files", "*.csv*"),
+            ("all files", "*.*")
+        )
+    )
+    # Change label contents
+    label_file_explorer.configure(text="File Opened: " + filename)
+
+
+def run_shaper(filename):
     max_freq = 200
-    #args = [f'{filename}']
-    datas = [graph_accelerometer.parse_log(fn,None) for fn in filename]
-    fig = graph_accelerometer.plot_compare_frequency(datas, filename, max_freq, 'all')
+    # Parse data
+    args = [f'{filename}']
+    datas = [calibrate_shaper.parse_log(fn) for fn in args]
+    # Calibrate shaper and generate outputs
+    selected_shaper, shapers, calibration_data = calibrate_shaper.calibrate_shaper(datas, None, None)
+    # Draw graph
+    calibrate_shaper.setup_matplotlib(None)
+    fig = calibrate_shaper.plot_freq_response(args, calibration_data, shapers, selected_shaper, max_freq)
     fig.tight_layout()
     fig.show()
+    # matplotlib.pyplot.show()
+
 
 def _exit():
     exit()
@@ -26,25 +44,26 @@ def _exit():
 
 # GUI root window
 window = Tk()
-window.title("Belt tensioning procedure Assistant by MagicFly")
-
+window.title("Shaper Calibration Assistant by RoyalT")
+# Labels and buttons
 label_file_explorer = Label(
     window,
-    text="Run Belt tensioning procedure",
+    text="Select a CSV file to run shaper calibration on",
     width=100,
     height=4,
     fg="blue"
 )
+button_explore = Button(window, text="Select CSV File", command=browse_files)
 button_exit = Button(window, text="Exit", command=_exit)
 button_run = Button(
     window,
     text="Run",
-    command=lambda: run_graph(['raw_data_axis=1.000,-1.000_a.csv','raw_data_axis=1.000,1.000_b.csv'])
+    command=lambda: run_shaper(label_file_explorer.cget("text").split(": ")[1])
 )
-
 # Grid
 label_file_explorer.grid(column=1, row=1)
-button_run.grid(column=1, row=2)
-button_exit.grid(column=1, row=3)
+button_explore.grid(column=1, row=2)
+button_run.grid(column=1, row=3)
+button_exit.grid(column=1, row=4)
 # Drive it like you stole it
 window.mainloop()
