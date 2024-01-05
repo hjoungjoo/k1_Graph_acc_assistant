@@ -25,8 +25,12 @@ gcode:<br/>
 &nbsp;&nbsp;TEST_RESONANCES AXIS=1,1 OUTPUT=raw_data NAME=b<br/>
 &nbsp;&nbsp;TEST_RESONANCES AXIS=1,-1 OUTPUT=raw_data NAME=a<br/>
 
-# 📦Download
-[Releases](https://github.com/hjoungjoo/k1_Graph_acc_assistant/releases)
+# 📦Download<br/>
+[Releases](https://github.com/hjoungjoo/k1_Graph_acc_assistant/releases)<br/>
 
 EXE packaged by pyinstaller. Build cmd:<br/>
-pyinstaller -w main.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant
+pyinstaller -w main.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant<br/>
+
+#Reference<br/>
+[theycallmek/Klipper-Input-Shaping-Assistant](https://github.com/theycallmek/Klipper-Input-Shaping-Assistant)<br/>
+Klipper belting procedure( Kukynas ) of the [D3vil design team Discord](https://discord.gg/d3vil-design)<br/>
