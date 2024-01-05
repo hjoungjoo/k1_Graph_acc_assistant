@@ -7,6 +7,7 @@ import graph_accelerometer
 import matplotlib
 import matplotlib.ticker
 import matplotlib.pyplot, matplotlib.dates, matplotlib.font_manager
+from sys import exit
 
 # Use TkAgg backend
 matplotlib.rcParams.update({'figure.autolayout': True})
