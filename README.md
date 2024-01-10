@@ -29,8 +29,10 @@ gcode:<br/>
 [Releases](https://github.com/hjoungjoo/k1_Graph_acc_assistant/releases)<br/>
 
 EXE packaged by pyinstaller. Build cmd:<br/>
-pyinstaller -w main.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant<br/>
+old : pyinstaller -w main.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant<br/>
+v1.0~ : pyinstaller -w Klipper-graph-acc-Assistant.py --onefile --add-data="extras/*;extras" -n Klipper-graph-acc-Assistant<br/>
 
 #Reference<br/>
 [theycallmek/Klipper-Input-Shaping-Assistant](https://github.com/theycallmek/Klipper-Input-Shaping-Assistant)<br/>
 Klipper belting procedure( Kukynas ) of the [D3vil design team Discord](https://discord.gg/d3vil-design)<br/>
+[Guilouz wiki](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki)<br/>
