@@ -325,6 +325,8 @@ def plot_compare_frequency(ax, lognames, signal1, signal2, max_freq):
         label = ALPHABET[paired_peak_count]
         amplitude_offset = abs(((signal2.psd[peak2[0]] - signal1.psd[peak1[0]]) / max(signal1.psd[peak1[0]], signal2.psd[peak2[0]])) * 100)
         frequency_offset = abs(signal2.freqs[peak2[0]] - signal1.freqs[peak1[0]])
+        ref_feq = signal1.freqs[peak1[0]]
+        ref_amp = signal1.psd[peak1[0]]
         offsets_table_data.append([f"Peaks {label}", f"{frequency_offset:.1f} Hz", f"{amplitude_offset:.1f} %"])
         
         ax.plot(signal1.freqs[peak1[0]], signal1.psd[peak1[0]], "x", color='black')
@@ -359,6 +361,8 @@ def plot_compare_frequency(ax, lognames, signal1, signal2, max_freq):
     similarity_factor = compute_curve_similarity_factor(signal1, signal2)
     ax2.plot([], [], ' ', label=f'Estimated similarity: {similarity_factor:.1f}%')
     ax2.plot([], [], ' ', label=f'Number of unpaired peaks: {unpaired_peak_count}')
+    ax2.plot([], [], ' ', label="Belt " + signal1_belt + f' peaks frequency: {ref_feq:.1f} Hz')
+    ax2.plot([], [], ' ', label="Belt " + signal1_belt + f' peaks amplitude: {ref_amp:.1e}')
     print(f"Belts estimated similarity: {similarity_factor:.1f}%")
 
     # Setting axis parameters, grid and graph title
