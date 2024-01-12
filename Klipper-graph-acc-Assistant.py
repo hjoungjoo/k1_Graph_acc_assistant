@@ -61,7 +61,7 @@ def _exit():
 
 # GUI root window
 window = Tk()
-window.title("Belt tensioning procedure Assistant by MagicFly")
+window.title("Klipper Graphs Assistant procedure Assistant by MagicFly")
 # Labels and buttons
 label_file_explorer_1 = Label(
     window,
