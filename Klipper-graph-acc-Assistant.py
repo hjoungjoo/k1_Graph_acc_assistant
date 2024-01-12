@@ -3,7 +3,7 @@
 import os.path
 from tkinter import *
 from tkinter import filedialog
-# import graph_accelerometer
+import calibrate_input_shaper
 import graph_belts
 import matplotlib
 import matplotlib.ticker
@@ -14,9 +14,9 @@ from sys import exit
 matplotlib.rcParams.update({'figure.autolayout': True})
 matplotlib.use('TkAgg')
 
-def browse_file_1():
-    filename_1 = filedialog.askopenfilename(
-        initialdir="/",
+def browse_file(label_file_explorer):
+    filename = filedialog.askopenfilename(
+        initialdir=os.path.abspath(__file__),#"/",
         title="Select a File",
         filetypes=(
             ("CSV files", "*.csv*"),
@@ -24,26 +24,36 @@ def browse_file_1():
         )
     )
     # Change label contents
-    label_file_explorer_1.configure(text="File Opened: " + filename_1)
+    if filename != "":
+        label_file_explorer.configure(text="File Opened: " + filename)
 
-def browse_file_2():
-    filename_2 = filedialog.askopenfilename(
-        initialdir="/",
-        title="Select a File",
-        filetypes=(
-            ("CSV files", "*.csv*"),
-            ("all files", "*.*")
-        )
-    )
-    # Change label contents
-    label_file_explorer_2.configure(text="File Opened: " + filename_2)
-
-def run_plot():
+def run_belt_plot():
     lognames = [label_file_explorer_1.cget("text").split(": ")[1],label_file_explorer_2.cget("text").split(": ")[1]]
-#    max_freq = 200
-    fig = graph_belts.belts_calibration(lognames,"~/klipper",200.,False,8,4.8)
+    if os.path.basename(lognames[0]).find("raw_data_axis") == 0 and os.path.basename(lognames[1]).find("raw_data_axis") == 0:
+        fig = graph_belts.belts_calibration(lognames,"~/klipper",200.,False,8,4.8)
+        fig.tight_layout()
+        fig.show()
+
+def run_shaper(filename):
+    max_freq = 200
+    # Parse data
+    args = [f'{filename}']
+    datas = [calibrate_input_shaper.parse_log(fn) for fn in args]
+    # Calibrate shaper and generate outputs
+    selected_shaper, shapers, calibration_data = calibrate_input_shaper.calibrate_shaper(datas, None, None)
+    # Draw graph
+    calibrate_input_shaper.setup_matplotlib(None)
+    fig = calibrate_input_shaper.plot_freq_response(args, calibration_data, shapers, selected_shaper, max_freq)
     fig.tight_layout()
     fig.show()
+    # matplotlib.pyplot.show()
+
+def run_input_plot():
+    lognames = [label_file_explorer_1.cget("text").split(": ")[1],label_file_explorer_2.cget("text").split(": ")[1]]
+    if os.path.basename(lognames[0]).find("calibration") == 0:
+        run_shaper(lognames[0])
+    if os.path.basename(lognames[1]).find("calibration") == 0:
+        run_shaper(lognames[1])
 
 def _exit():
     exit()
@@ -57,33 +67,30 @@ label_file_explorer_1 = Label(
     window,
     text="File Opened: raw_data_axis=1.000,-1.000_a.csv",
     width=100,
-    height=4,
+    height=2,
     fg="blue"
 )
 label_file_explorer_2 = Label(
     window,
     text="File Opened: raw_data_axis=1.000,1.000_b.csv",
     width=100,
-    height=4,
+    height=2,
     fg="blue"
 )
 
-button_explore_1 = Button(window, text="Select CSV File", command=browse_file_1)
-button_explore_2 = Button(window, text="Select CSV File", command=browse_file_2)
+button_explore_1 = Button(window, text="Select CSV File", command=lambda:browse_file(label_file_explorer_1))
+button_explore_2 = Button(window, text="Select CSV File", command=lambda:browse_file(label_file_explorer_2))
 button_exit = Button(window, text="Exit", command=_exit)
-button_run = Button(
-    window,
-    text="Run",
-    #    command=lambda: run_graph(['raw_data_axis=1.000,-1.000_a.csv','raw_data_axis=1.000,1.000_b.csv'])
-    command=lambda: run_plot()
-)
+button_input_run = Button(window, text="Input shaper graphs Run", command=lambda: run_input_plot())
+button_belt_run = Button(window, text="Belt tension graphs Run", command=lambda: run_belt_plot())
 
 # Grid
 label_file_explorer_1.grid(column=1, row=1)
-button_explore_1.grid(column=1, row=2)
-label_file_explorer_2.grid(column=1, row=3)
-button_explore_2.grid(column=1, row=4)
-button_run.grid(column=1, row=5)
+button_explore_1.grid(column=2, row=1)
+label_file_explorer_2.grid(column=1, row=2)
+button_explore_2.grid(column=2, row=2)
+button_input_run.grid(column=1, row=3)
+button_belt_run.grid(column=1, row=4)
 button_exit.grid(column=1, row=6)
 # Drive it like you stole it
 window.mainloop()
