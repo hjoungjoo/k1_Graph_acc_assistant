@@ -1,10 +1,11 @@
-# k1_Graph_acc_assistant
-이 프로젝트는 파이썬 없이 쉽게 사용자들이 밸트 탠셔닝절차를 실행하고 그 결과를 쉽게 볼수 있도록 만들었습니다.
+# k1_Graph_acc_assistant<br/>
+이 프로젝트는 파이썬 없이 쉽게 사용자들이 밸트 탠셔닝절차를 실행하고 그 결과를 쉽게 볼수 있도록 만들었습니다.<br/>
 
-This project aims to make it easy for users who have little knowledge of Python to run Belt tensioning procedure( Klipper's Graph_accelerometer ) on Windows and view the resulting recommendations.
+This project aims to make it easy for users who have little knowledge of Python to run Belt tensioning procedure( Klipper's Graph_accelerometer ) on Windows and view the resulting recommendations.<br/>
 
 # 🔌Usage
--- input shapers -- 
+-- input shapers -- <br/>
+
 인풋쉐이퍼 실행한다.<br/>
 생성된 CSV 데이터를 PC로 복사한다.<br/>
 CSV파일을 선택 후 Input shaper graphs Run 버튼으로 실행.<br/>
@@ -13,8 +14,9 @@ Run the input shaper.<br/>
 The generated CSV data is copied to the PC.<br/>
 Select a CSV file and run it with the Input shaper graphs Run button.<br/>
 
--- Belt test --
-우선 gcode_macro.cfg 에 아래 메크로를 추가한뒤 실행합니다.
+-- Belt test --<br/>
+
+우선 gcode_macro.cfg 에 아래 메크로를 추가한뒤 실행합니다.<br/>
 테스트가 완료되면 /tmp 디렉토리에 2개의 엑셀파일 결과물이 생성됩니다.(raw_data_axis=1.000,-1.000_a.csv,raw_data_axis=1.000,1.000_b.csv)<br/>
 SSH등을 이용하여 두 파일을 PC로 복사 합니다.<br/>
 CSV파일을 선택하고 Belt tension graphs Run 실행합니다.<br/>
