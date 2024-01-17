@@ -27,15 +27,16 @@ once the resonance test is finished for both axis 2 excel files will be generate
 access your K1/Max via SSH and locate the folder, drag&drop those 2 files into your PC.<br/>
 Select a CSV file and run it with the Belt tension graphs Run button.<br/>
 
-[gcode_macro BELT_TEST]<br/>
-description: Run resonance test to analyze belts<br/>
-gcode:<br/>
-&nbsp;&nbsp;G28<br/>
-&nbsp;&nbsp;TURN_OFF_HEATERS<br/>
-&nbsp;&nbsp;M107<br/>
-&nbsp;&nbsp;TEST_RESONANCES AXIS=1,1 OUTPUT=raw_data NAME=b<br/>
-&nbsp;&nbsp;TEST_RESONANCES AXIS=1,-1 OUTPUT=raw_data NAME=a<br/>
-
+```
+[gcode_macro BELT_TEST]
+description: Run resonance test to analyze belts
+gcode:
+  G28
+  TURN_OFF_HEATERS
+  M107
+  TEST_RESONANCES AXIS=1,1 OUTPUT=raw_data NAME=b
+  TEST_RESONANCES AXIS=1,-1 OUTPUT=raw_data NAME=a
+```
 # 📦Download<br/>
 [Releases](https://github.com/hjoungjoo/k1_Graph_acc_assistant/releases)<br/>
 
